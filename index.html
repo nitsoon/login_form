@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ورود / ثبت‌نام</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-light: #f0f4f8;
+      --bg-dark: #1e1e2f;
+      --text-light: #000;
+      --text-dark: #fff;
+      --card-light: #fff;
+      --card-dark: #2c2c3e;
+      --primary: #007bff;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      background: var(--card-light);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      z-index: 2;
+      transition: background 0.3s;
+    }
+    body.dark .container {
+      background: var(--card-dark);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      background: var(--primary);
+      color: white;
+      font-weight: bold;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .google {
+      background: #db4437;
+      margin-top: 0.5rem;
+    }
+    .toggle, .lang-switch, .theme-toggle {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: var(--primary);
+    }
+    .theme-toggle {
+      margin-top: 0.5rem;
+    }
+    .ball {
+      position: absolute;
+      top: 50%;
+      width: 80px;
+      height: 80px;
+      background: #00bcd4;
+      border-radius: 50%;
+      animation: moveBall 8s linear infinite;
+      z-index: 1;
+      opacity: 0.2;
+    }
+    @keyframes moveBall {
+      from { right: -100px; }
+      to { right: 110%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ball"></div>
+  <div class="container" id="formContainer">
+    <h2 id="formTitle">ورود</h2>
+    <input type="text" id="email" placeholder="ایمیل" />
+    <input type="password" id="password" placeholder="رمز عبور" />
+    <button id="submitBtn">ورود</button>
+    <button class="google" id="googleBtn">ورود با گوگل</button>
+    <div class="toggle" id="toggleText">اکانت ندارید؟ ثبت‌نام کنید</div>
+    <div class="theme-toggle" id="themeToggle">🌙 / ☀️ تغییر تم</div>
+    <div class="lang-switch" id="langSwitch">Switch to English</div>
+  </div>
+
+  <script>
+    const formTitle = document.getElementById('formTitle');
+    const submitBtn = document.getElementById('submitBtn');
+    const toggleText = document.getElementById('toggleText');
+    const langSwitch = document.getElementById('langSwitch');
+    const themeToggle = document.getElementById('themeToggle');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const googleBtn = document.getElementById('googleBtn');
+    let isLogin = true;
+    let isPersian = true;
+
+    toggleText.addEventListener('click', () => {
+      isLogin = !isLogin;
+      updateTexts();
+    });
+
+    langSwitch.addEventListener('click', () => {
+      isPersian = !isPersian;
+      document.documentElement.lang = isPersian ? 'fa' : 'en';
+      document.documentElement.dir = isPersian ? 'rtl' : 'ltr';
+      updateTexts();
+    });
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+
+    function updateTexts() {
+      if (isPersian) {
+        formTitle.innerText = isLogin ? 'ورود' : 'ثبت‌نام';
+        submitBtn.innerText = isLogin ? 'ورود' : 'ثبت‌نام';
+        toggleText.innerText = isLogin ? 'اکانت ندارید؟ ثبت‌نام کنید' : 'حساب دارید؟ وارد شوید';
+        emailInput.placeholder = 'ایمیل';
+        passwordInput.placeholder = 'رمز عبور';
+        googleBtn.innerText = 'ورود با گوگل';
+        langSwitch.innerText = 'Switch to English';
+      } else {
+        formTitle.innerText = isLogin ? 'Login' : 'Sign Up';
+        submitBtn.innerText = isLogin ? 'Login' : 'Sign Up';
+        toggleText.innerText = isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login";
+        emailInput.placeholder = 'Email';
+        passwordInput.placeholder = 'Password';
+        googleBtn.innerText = 'Login with Google';
+        langSwitch.innerText = 'تغییر به فارسی';
+      }
+    }
+  </script>
+</body>
+</html>
